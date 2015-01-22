@@ -15,7 +15,26 @@ var Game = React.createClass({
             turn: 'O'
         };
     },
-    gameLogic: function(){
+    checkWinner: function(){
+      var t = this.state.tiles;
+      var winner = function(a,b,c){
+        var line = a + b + c;
+        if(line === "XXX" || line === "OOO") return true;
+      };
+      //Horizontal
+      if(winner(t[0], t[1], t[2])) return t[0];
+      if(winner(t[3], t[4], t[5])) return t[3];
+      if(winner(t[6], t[7], t[8])) return t[6];
+      //Vertical
+      if(winner(t[0], t[3], t[6])) return t[0];
+      if(winner(t[1], t[4], t[7])) return t[1];
+      if(winner(t[2], t[5], t[8])) return t[2];
+      //Diagonal
+      if(winner(t[0], t[4], t[8])) return t[0];
+      if(winner(t[2], t[4], t[6])) return t[2];
+      //Draw
+      if(t.join('').length === 9) return "DRAW! Nobody";
+      return false;
 
     },
     reset: function(){
