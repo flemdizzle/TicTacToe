@@ -16,7 +16,12 @@ var Game = React.createClass({
     return(
       <div>
         <div id="game">
-          Tiles will go here
+          { this.state.tiles.map(function(){
+            return(
+                <Tile />
+              );
+            }, this)
+          }
           <Tile />
         </div>
       </div>
