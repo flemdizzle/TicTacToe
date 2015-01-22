@@ -12,7 +12,7 @@ var Game = React.createClass({
                 '', '', ''
             ],
             //Noughts always have the first go.
-            turn: 'o'
+            turn: 'O'
         };
     },
     //Tile click method to modify the state of the tiles array
@@ -20,19 +20,23 @@ var Game = React.createClass({
         var tiles = this.state.tiles;
         if(tiles[position] !== '') return;
         tiles[position] = player;
-        this.setState({tiles: tiles, turn: player === 'o' ? 'x' : 'o'});
+        this.setState({tiles: tiles, turn: player === 'O' ? 'X' : 'O'});
 
     },
     render: function() {
-        return <div>
-            <div id='game'>
-                { this.state.tiles.map(function(tile,position){
-                    return (
-                        <Tile status={tile} position={position} turn={this.state.turn} tileClick={this.tileClick} />
-                        );
-                }, this) }
-            </div>
-        </div>;
+      return (
+        <div>
+          <h1>Tic Tac Toe</h1>
+          <TurnDisplay turn={this.state.turn} />
+          <div id='game'>
+              { this.state.tiles.map(function(tile,position){
+                  return (
+                      <Tile status={tile} position={position} turn={this.state.turn} tileClick={this.tileClick} />
+                      );
+              }, this) }
+          </div>
+        </div>
+      );
     }
 });
 var Tile = React.createClass({
@@ -44,6 +48,14 @@ var Tile = React.createClass({
         return <div className={this.props.status === '' ? 'tile' : 'tile status-' + this.props.status} onClick={this.clickHandler}>{this.props.status}</div>;
     }
 });
+
+var TurnDisplay = React.createClass({
+  render: function(){
+    return (
+      <h3>Your turn {this.props.turn}</h3>
+    );
+  }
+})
 
 React.render(
   <Game />,
