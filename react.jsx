@@ -47,7 +47,7 @@ var Game = React.createClass({
           }
       this.setState({turn: '', tiles: tiles, message: message});
     },
-    reset: function(){
+    newGame: function(){
       this.setState(this.getInitialState());
     },
     //Tile click method to modify the state of the tiles array
@@ -70,7 +70,7 @@ var Game = React.createClass({
     render: function() {
       return (
         <div>
-          <Display reset={this.reset} turn={this.state.turn} message={this.state.message} />
+          <Display newGame={this.newGame} turn={this.state.turn} message={this.state.message} />
           <div id='game'>
               { this.state.tiles.map(function(tile,position){
                   return (
@@ -97,7 +97,7 @@ var Display = React.createClass({
     return(
       <div className="display">
         <h1>Tic Tac Toe</h1>
-        <button onClick={this.props.reset}>Reset Game</button>
+        <button onClick={this.props.newGame}>New Game</button>
         <h3>{this.props.message}{this.props.turn}</h3>
       </div>
     );
