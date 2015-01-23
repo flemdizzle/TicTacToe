@@ -12,7 +12,8 @@ var Game = React.createClass({
                 '', '', ''
             ],
             //Noughts always have the first go.
-            turn: 'O'
+            turn: 'O',
+            message: 'Your turn '
         };
     },
     checkWinner: function(){
@@ -33,27 +34,43 @@ var Game = React.createClass({
       if(winner(t[0], t[4], t[8])) return true;
       if(winner(t[2], t[4], t[6])) return true;
       //Draw
-      if(t.join('').length === 9) return "DRAW! Nobody";
+      if(t.join('').length === 9){
+        return "Draw";
+      }
       return false;
 
+    },
+    replaceAll: function(letter, message){
+      var tiles = this.state.tiles
+      for(var i = tiles.length; i--;){
+            tiles[i] = letter;
+          }
+      this.setState({turn: '', tiles: tiles, message: message});
     },
     reset: function(){
       this.setState(this.getInitialState());
     },
     //Tile click method to modify the state of the tiles array
     tileClick: function(position, player) {
-        if (!this.checkWinner()){
-          var tiles = this.state.tiles;
-          if(tiles[position] !== '') return;
-          tiles[position] = player;
-          this.setState({tiles: tiles, turn: player === 'O' ? 'X' : 'O'});
+        var tiles = this.state.tiles;
+        if(tiles[position] !== '') return;
+        tiles[position] = player;
+        this.setState({tiles: tiles});
+        if(!this.checkWinner()){
+          this.setState({turn: player === 'O' ? 'X' : 'O'});
+        }else if(this.checkWinner() === "Draw"){        
+          this.replaceAll("D","DRAW! Nobody Wins.");
+        }else{
+          var message = player + " WINS!"
+          this.replaceAll(player, message);
         }
+
 
     },
     render: function() {
       return (
         <div>
-          <Display reset={this.reset} turn={this.state.turn} />
+          <Display reset={this.reset} turn={this.state.turn} message={this.state.message} />
           <div id='game'>
               { this.state.tiles.map(function(tile,position){
                   return (
@@ -81,7 +98,7 @@ var Display = React.createClass({
       <div className="display">
         <h1>Tic Tac Toe</h1>
         <button onClick={this.props.reset}>Reset Game</button>
-        <h3>Your turn {this.props.turn}</h3>
+        <h3>{this.props.message}{this.props.turn}</h3>
       </div>
     );
   }
