@@ -36,7 +36,7 @@ var Game = React.createClass({
       //Draw
       if(t.join('').length === 9){
         return "Draw";
-      }
+      };
       return false;
 
     },
