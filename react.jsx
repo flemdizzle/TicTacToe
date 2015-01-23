@@ -22,16 +22,16 @@ var Game = React.createClass({
         if(line === "XXX" || line === "OOO") return true;
       };
       //Horizontal
-      if(winner(t[0], t[1], t[2])) return t[0];
-      if(winner(t[3], t[4], t[5])) return t[3];
-      if(winner(t[6], t[7], t[8])) return t[6];
+      if(winner(t[0], t[1], t[2])) return true;
+      if(winner(t[3], t[4], t[5])) return true;
+      if(winner(t[6], t[7], t[8])) return true;
       //Vertical
-      if(winner(t[0], t[3], t[6])) return t[0];
-      if(winner(t[1], t[4], t[7])) return t[1];
-      if(winner(t[2], t[5], t[8])) return t[2];
+      if(winner(t[0], t[3], t[6])) return true;
+      if(winner(t[1], t[4], t[7])) return true;
+      if(winner(t[2], t[5], t[8])) return true;
       //Diagonal
-      if(winner(t[0], t[4], t[8])) return t[0];
-      if(winner(t[2], t[4], t[6])) return t[2];
+      if(winner(t[0], t[4], t[8])) return true;
+      if(winner(t[2], t[4], t[6])) return true;
       //Draw
       if(t.join('').length === 9) return "DRAW! Nobody";
       return false;
@@ -42,10 +42,12 @@ var Game = React.createClass({
     },
     //Tile click method to modify the state of the tiles array
     tileClick: function(position, player) {
-        var tiles = this.state.tiles;
-        if(tiles[position] !== '') return;
-        tiles[position] = player;
-        this.setState({tiles: tiles, turn: player === 'O' ? 'X' : 'O'});
+        if (!this.checkWinner()){
+          var tiles = this.state.tiles;
+          if(tiles[position] !== '') return;
+          tiles[position] = player;
+          this.setState({tiles: tiles, turn: player === 'O' ? 'X' : 'O'});
+        }
 
     },
     render: function() {
