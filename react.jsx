@@ -17,7 +17,6 @@ var Game = React.createClass({
               ['','','','','','','','',''],
               ['','','','','','','','','']
             ],
-            //
             turn: 'O',
             message: 'Your turn '
         };
@@ -78,7 +77,9 @@ var Game = React.createClass({
         <div>
           <Display newGame={this.newGame} turn={this.state.turn} message={this.state.message} />
           <div id='game'>
-              { this.state.tiles.map(function(tile,position){
+              { 
+                //add a for loop here to go through the nested loop
+                this.state.tiles.map(function(tile,position){
                   return (
                       <Tile status={tile} position={position} turn={this.state.turn} tileClick={this.tileClick} />
                       );
