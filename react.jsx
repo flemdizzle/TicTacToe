@@ -25,37 +25,39 @@ var Game = React.createClass({
             message: 'Your turn '
         };
     },
-    checkWinner: function(tileArray){
-        //also need check for winner over all
-        var t = this.state.tiles[tileArray];
+    checkWinner: function(arr){
+        //need to just pass in the array that you want it to check
+        //This checks for winners
         var winner = function(a,b,c){
           var line = a + b + c;
           if(line === "XXX" || line === "OOO") return true;
         };
         //Horizontal
-        if(winner(t[0], t[1], t[2])) return true;
-        if(winner(t[3], t[4], t[5])) return true;
-        if(winner(t[6], t[7], t[8])) return true;
+        if(winner(arr[0], arr[1], arr[2])) return true;
+        if(winner(arr[3], arr[4], arr[5])) return true;
+        if(winner(arr[6], arr[7], arr[8])) return true;
         //Vertical
-        if(winner(t[0], t[3], t[6])) return true;
-        if(winner(t[1], t[4], t[7])) return true;
-        if(winner(t[2], t[5], t[8])) return true;
+        if(winner(arr[0], arr[3], arr[6])) return true;
+        if(winner(arr[1], arr[4], arr[7])) return true;
+        if(winner(arr[2], arr[5], arr[8])) return true;
         //Diagonal
-        if(winner(t[0], t[4], t[8])) return true;
-        if(winner(t[2], t[4], t[6])) return true;
+        if(winner(arr[0], arr[4], arr[8])) return true;
+        if(winner(arr[2], arr[4], arr[6])) return true;
         //Draw
-        if(t.join('').length === 9){
+        if(arr.join('').length === 9){
           return "Draw";
         };
       return false;
     },
-    replaceAll: function(tileArray, letter, message){
+    replaceAll: function(tileArray, letter){
       //this needs to be replaced with logic for new nested tiles
       var tiles = this.state.tiles;
+      var gameStatus = this.state.gameStatus;
       for(var i = tiles[tileArray].length; i--;){
             tiles[tileArray][i] = letter;
           }
-      this.setState({tiles: tiles});
+      gameStatus[tileArray] = letter;
+      this.setState({tiles: tiles, gameStatus: gameStatus});
     },
     newGame: function(){
       this.setState(this.getInitialState());
@@ -65,13 +67,16 @@ var Game = React.createClass({
         if(tiles[tileArray][position] !== '') return;
         tiles[tileArray][position] = player;
         this.setState({tiles: tiles});
-        if(!this.checkWinner(tileArray)){
+        if(!this.checkWinner(this.state.tiles[tileArray])){
           this.setState({turn: player === 'O' ? 'X' : 'O'});
-        }else if(this.checkWinner(tileArray) === "Draw"){        
-          this.replaceAll(tileArray, "D","DRAW! Nobody Wins.");
+        }else if(this.checkWinner(this.state.tiles[tileArray]) === "Draw"){        
+          this.replaceAll(tileArray, "D");
         }else{
-          var message = player + " WINS!"
-          this.replaceAll(tileArray, player, message);
+          this.replaceAll(tileArray, player);
+          if(this.checkWinner(this.state.gameStatus)){
+            var message = player + ' WINS!';
+            this.setState({turn: '', message: message});
+          }
         }
 
 
