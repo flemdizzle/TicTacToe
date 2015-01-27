@@ -5,7 +5,6 @@ document.body.appendChild(containerDiv);
 var Game = React.createClass({
     getInitialState: function() {
         return {
-            //Initial state of the game board.
             tiles:[
               ['','','','','','','','',''],
               ['','','','','','','','',''],
@@ -55,7 +54,6 @@ var Game = React.createClass({
     newGame: function(){
       this.setState(this.getInitialState());
     },
-    //Tile click method to modify the state of the tiles array
     tileClick: function(tileArray, position, player) {
         var tiles = this.state.tiles;
         if(tiles[tileArray][position] !== '') return;
@@ -92,7 +90,6 @@ var Game = React.createClass({
     }
 });
 var Tile = React.createClass({
-    //The method to handle when a user clicks on the tile, calls the tileClick method on the parent component that is referenced in the props object.
     clickHandler: function() {
         this.props.tileClick(this.props.tileArray, this.props.position, this.props.turn);
     },
