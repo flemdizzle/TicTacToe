@@ -20,9 +20,8 @@ var Game = React.createClass({
             message: 'Your turn '
         };
     },
-    checkWinner: function(){
-      for (var i = 0; i < this.state.tiles.length; i++) {
-        var t = this.state.tiles[i];
+    checkWinner: function(tileArray){
+        var t = this.state.tiles[tileArray];
         var winner = function(a,b,c){
           var line = a + b + c;
           if(line === "XXX" || line === "OOO") return true;
@@ -42,7 +41,6 @@ var Game = React.createClass({
         if(t.join('').length === 9){
           return "Draw";
         };
-      };
       return false;
     },
     replaceAll: function(tileArray, letter, message){
@@ -61,9 +59,9 @@ var Game = React.createClass({
         if(tiles[tileArray][position] !== '') return;
         tiles[tileArray][position] = player;
         this.setState({tiles: tiles});
-        if(!this.checkWinner()){
+        if(!this.checkWinner(tileArray)){
           this.setState({turn: player === 'O' ? 'X' : 'O'});
-        }else if(this.checkWinner() === "Draw"){        
+        }else if(this.checkWinner(tileArray) === "Draw"){        
           this.replaceAll(tileArray, "D","DRAW! Nobody Wins.");
         }else{
           var message = player + " WINS!"
