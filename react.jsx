@@ -78,14 +78,14 @@ var Game = React.createClass({
           <Display newGame={this.newGame} turn={this.state.turn} message={this.state.message} />
           <div id='game'>
               { 
-                //add a for loop here to go through the nested loop
-                for (var i = 0; i < this.state.tiles.length; i++) {
-                  this.state.tiles[i].map(function(tile,position){
-                    return (
-                        <Tile status={tile} position={position} turn={this.state.turn} tileClick={this.tileClick} />
-                        );
-                  }, this) }
-                };
+                this.state.tiles.map(function(tile,position,array){
+                  tileArray = [];
+                  for (var i = 0; i < tile.length; i++) {
+                    tileArray.push(<Tile tileArray={position} status={tile[i]} position={i} turn={this.state.turn} tileClick={this.tileClick} />);
+                  };
+                  return tileArray;
+                }, this) 
+              }
           </div>
         </div>
       );
