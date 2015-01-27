@@ -21,7 +21,8 @@ var Game = React.createClass({
         };
     },
     checkWinner: function(){
-      var t = this.state.tiles;
+      for (var i = 0; i < this.state.tiles.length; i++) {
+      var t = this.state.tiles[i];
       var winner = function(a,b,c){
         var line = a + b + c;
         if(line === "XXX" || line === "OOO") return true;
@@ -41,8 +42,8 @@ var Game = React.createClass({
       if(t.join('').length === 9){
         return "Draw";
       };
+      };
       return false;
-
     },
     replaceAll: function(letter, message){
       var tiles = this.state.tiles
