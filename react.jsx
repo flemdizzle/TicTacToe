@@ -51,7 +51,7 @@ var Game = React.createClass({
       for(var i = tiles[tileArray].length; i--;){
             tiles[tileArray][i] = letter;
           }
-      this.setState({turn: '', tiles: tiles, message: message});
+      this.setState({tiles: tiles});
     },
     newGame: function(){
       this.setState(this.getInitialState());
@@ -101,7 +101,7 @@ var Tile = React.createClass({
         this.props.tileClick(this.props.tileArray, this.props.position, this.props.turn);
     },
     render: function() {
-        return <div className={this.props.status === '' ? 'tile' + this.props.tileArray : 'tile' + this.props.tileArray + ' status-' + this.props.status} onClick={this.clickHandler}>{this.props.status}</div>;
+        return <div className={this.props.status === '' ? 'tile' : 'tile status-' + this.props.status} onClick={this.clickHandler}>{this.props.status}</div>;
     }
 });
 
