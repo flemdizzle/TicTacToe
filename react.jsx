@@ -16,11 +16,17 @@ var Game = React.createClass({
               ['','','','','','','','',''],
               ['','','','','','','','','']
             ],
+            gameStatus:[
+              '','','',
+              '','','',
+              '','',''
+            ],
             turn: 'O',
             message: 'Your turn '
         };
     },
     checkWinner: function(tileArray){
+        //also need check for winner over all
         var t = this.state.tiles[tileArray];
         var winner = function(a,b,c){
           var line = a + b + c;
