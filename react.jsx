@@ -22,30 +22,31 @@ var Game = React.createClass({
     },
     checkWinner: function(){
       for (var i = 0; i < this.state.tiles.length; i++) {
-      var t = this.state.tiles[i];
-      var winner = function(a,b,c){
-        var line = a + b + c;
-        if(line === "XXX" || line === "OOO") return true;
-      };
-      //Horizontal
-      if(winner(t[0], t[1], t[2])) return true;
-      if(winner(t[3], t[4], t[5])) return true;
-      if(winner(t[6], t[7], t[8])) return true;
-      //Vertical
-      if(winner(t[0], t[3], t[6])) return true;
-      if(winner(t[1], t[4], t[7])) return true;
-      if(winner(t[2], t[5], t[8])) return true;
-      //Diagonal
-      if(winner(t[0], t[4], t[8])) return true;
-      if(winner(t[2], t[4], t[6])) return true;
-      //Draw
-      if(t.join('').length === 9){
-        return "Draw";
-      };
+        var t = this.state.tiles[i];
+        var winner = function(a,b,c){
+          var line = a + b + c;
+          if(line === "XXX" || line === "OOO") return true;
+        };
+        //Horizontal
+        if(winner(t[0], t[1], t[2])) return true;
+        if(winner(t[3], t[4], t[5])) return true;
+        if(winner(t[6], t[7], t[8])) return true;
+        //Vertical
+        if(winner(t[0], t[3], t[6])) return true;
+        if(winner(t[1], t[4], t[7])) return true;
+        if(winner(t[2], t[5], t[8])) return true;
+        //Diagonal
+        if(winner(t[0], t[4], t[8])) return true;
+        if(winner(t[2], t[4], t[6])) return true;
+        //Draw
+        if(t.join('').length === 9){
+          return "Draw";
+        };
       };
       return false;
     },
     replaceAll: function(letter, message){
+      //this needs to be replaced with logic for new nested tiles
       var tiles = this.state.tiles
       for(var i = tiles.length; i--;){
             tiles[i] = letter;
@@ -80,7 +81,8 @@ var Game = React.createClass({
                 this.state.tiles.map(function(tile,position,array){
                   tileArray = [];
                   for (var i = 0; i < tile.length; i++) {
-                    tileArray.push(<Tile tileArray={position} status={tile[i]} position={i} turn={this.state.turn} tileClick={this.tileClick} />);
+                    gameClass = "game" + position;
+                    tileArray.push(<Tile className={gameClass} tileArray={position} status={tile[i]} position={i} turn={this.state.turn} tileClick={this.tileClick} />);
                   };
                   return tileArray;
                 }, this) 
@@ -95,7 +97,7 @@ var Tile = React.createClass({
         this.props.tileClick(this.props.tileArray, this.props.position, this.props.turn);
     },
     render: function() {
-        return <div className={this.props.status === '' ? 'tile' : 'tile status-' + this.props.status} onClick={this.clickHandler}>{this.props.status}</div>;
+        return <div className={this.props.status === '' ? 'tile' + this.props.tileArray : 'tile' + this.props.tileArray + ' status-' + this.props.status} onClick={this.clickHandler}>{this.props.status}</div>;
     }
 });
 
