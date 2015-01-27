@@ -45,7 +45,7 @@ var Game = React.createClass({
       };
       return false;
     },
-    replaceAll: function(letter, message){
+    replaceAll: function(tileArray, letter, message){
       //this needs to be replaced with logic for new nested tiles
       var tiles = this.state.tiles
       for(var i = tiles.length; i--;){
@@ -64,10 +64,10 @@ var Game = React.createClass({
         if(!this.checkWinner()){
           this.setState({turn: player === 'O' ? 'X' : 'O'});
         }else if(this.checkWinner() === "Draw"){        
-          this.replaceAll("D","DRAW! Nobody Wins.");
+          this.replaceAll(tileArray, "D","DRAW! Nobody Wins.");
         }else{
           var message = player + " WINS!"
-          this.replaceAll(player, message);
+          this.replaceAll(tileArray, player, message);
         }
 
 
