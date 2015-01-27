@@ -76,17 +76,21 @@ var Game = React.createClass({
       return (
         <div>
           <Display newGame={this.newGame} turn={this.state.turn} message={this.state.message} />
-          <div id='game'>
-              { 
-                this.state.tiles.map(function(tile,position,array){
-                  tileArray = [];
-                  for (var i = 0; i < tile.length; i++) {
-                    gameClass = "game" + position;
-                    tileArray.push(<Tile className={gameClass} tileArray={position} status={tile[i]} position={i} turn={this.state.turn} tileClick={this.tileClick} />);
-                  };
-                  return tileArray;
-                }, this) 
-              }
+          <div>
+          { 
+            this.state.tiles.map(function(tile,position,array){
+              tileArray = [];
+              for (var i = 0; i < tile.length; i++) {
+                gameClass = "game" + position;
+                tileArray.push(<Tile tileArray={position} status={tile[i]} position={i} turn={this.state.turn} tileClick={this.tileClick} />);
+              };
+              return (
+                <div id="game">
+                  {tileArray}
+                </div>
+              );
+            }, this) 
+          }
           </div>
         </div>
       );
