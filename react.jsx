@@ -47,9 +47,9 @@ var Game = React.createClass({
     },
     replaceAll: function(tileArray, letter, message){
       //this needs to be replaced with logic for new nested tiles
-      var tiles = this.state.tiles
-      for(var i = tiles.length; i--;){
-            tiles[i] = letter;
+      var tiles = this.state.tiles;
+      for(var i = tiles[tileArray].length; i--;){
+            tiles[tileArray][i] = letter;
           }
       this.setState({turn: '', tiles: tiles, message: message});
     },
