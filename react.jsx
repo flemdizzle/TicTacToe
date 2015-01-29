@@ -62,12 +62,22 @@ var Game = React.createClass({
     newGame: function(){
       this.setState(this.getInitialState());
     },
+    activeControl: function(tileArray, position){
+      //check if game status is already occupied
+      var gameStatus = this.state.gameStatus;
+      if (gameStatus[position] !== "") return;
+
+      gameStatus[tileArray] = "";
+      gameStatus[position] = "active";
+      this.setState({gameStatus: gameStatus});
+    },
     tileClick: function(tileArray, position, player) {
         if(this.state.gameStatus[tileArray] !== "active") return;
         var tiles = this.state.tiles;
         if(tiles[tileArray][position] !== '') return;
         tiles[tileArray][position] = player;
         this.setState({tiles: tiles});
+        this.activeControl(tileArray, position);
         if(!this.checkWinner(this.state.tiles[tileArray])){
           this.setState({turn: player === 'O' ? 'X' : 'O'});
         }else if(this.checkWinner(this.state.tiles[tileArray]) === "Draw"){        
