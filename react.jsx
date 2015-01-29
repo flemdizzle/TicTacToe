@@ -66,31 +66,30 @@ var Game = React.createClass({
       //check if game status is already occupied
       var gameStatus = this.state.gameStatus;
       if (gameStatus[position] !== "") return;
-
       gameStatus[tileArray] = "";
       gameStatus[position] = "active";
       this.setState({gameStatus: gameStatus});
     },
     tileClick: function(tileArray, position, player) {
-        if(this.state.gameStatus[tileArray] !== "active") return;
-        var tiles = this.state.tiles;
-        if(tiles[tileArray][position] !== '') return;
-        tiles[tileArray][position] = player;
-        this.setState({tiles: tiles});
-        this.activeControl(tileArray, position);
-        if(!this.checkWinner(this.state.tiles[tileArray])){
-          this.setState({turn: player === 'O' ? 'X' : 'O'});
-        }else if(this.checkWinner(this.state.tiles[tileArray]) === "Draw"){        
-          this.replaceAll(tileArray, "D");
+      if(this.state.gameStatus[tileArray] !== "active") return;
+      var tiles = this.state.tiles;
+      if(tiles[tileArray][position] !== '') return;
+      tiles[tileArray][position] = player;
+      this.setState({tiles: tiles});
+      this.activeControl(tileArray, position);
+      if(!this.checkWinner(this.state.tiles[tileArray])){
+        this.setState({turn: player === 'O' ? 'X' : 'O'});
+      }else if(this.checkWinner(this.state.tiles[tileArray]) === "Draw"){        
+        this.replaceAll(tileArray, "D");
+      }else{
+        this.replaceAll(tileArray, player);
+        if(this.checkWinner(this.state.gameStatus)){
+          var message = player + ' WINS!';
+          this.setState({turn: '', message: message});
         }else{
-          this.replaceAll(tileArray, player);
-          if(this.checkWinner(this.state.gameStatus)){
-            var message = player + ' WINS!';
-            this.setState({turn: '', message: message});
-          }
+          this.setState({turn: player === 'O' ? 'X' : 'O'});
         }
-
-
+      }
     },
     render: function() {
       return (
