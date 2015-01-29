@@ -26,3 +26,8 @@
     text-align: center;
     font-size: 100px;
 }
+
+.active {
+    border-color: #9ecaed;
+    box-shadow: 0 0 25px green;
+}

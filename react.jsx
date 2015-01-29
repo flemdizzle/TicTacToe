@@ -18,7 +18,7 @@ var Game = React.createClass({
             ],
             gameStatus:[
               '','','',
-              '','','',
+              '','active','',
               '','',''
             ],
             turn: 'O',
@@ -63,6 +63,7 @@ var Game = React.createClass({
       this.setState(this.getInitialState());
     },
     tileClick: function(tileArray, position, player) {
+        if(this.state.gameStatus[tileArray] !== "active") return;
         var tiles = this.state.tiles;
         if(tiles[tileArray][position] !== '') return;
         tiles[tileArray][position] = player;
@@ -94,7 +95,7 @@ var Game = React.createClass({
                 tileArray.push(<Tile tileArray={position} status={tile[i]} position={i} turn={this.state.turn} tileClick={this.tileClick} />);
               };
               return (
-                <div id="game">
+                <div id="game" className={this.state.gameStatus[position]} >
                   {tileArray}
                 </div>
               );
