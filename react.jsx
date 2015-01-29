@@ -63,6 +63,7 @@ var Game = React.createClass({
       this.setState(this.getInitialState());
     },
     activeControl: function(tileArray, position){
+      //fix corner win bug
       //check if game status is already occupied
       var gameStatus = this.state.gameStatus;
       if (gameStatus[position] !== "") return;
